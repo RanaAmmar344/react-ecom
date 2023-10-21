@@ -1,0 +1,169 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import Footer from "./Footer";
+import axios from "axios";
+import img from "../images/cloth.png";
+
+const Products = ({ productcard, searchQuery }) => {
+  const myStyle = {
+    width: "19rem",
+  };
+
+  const [products, setProducts] = useState([]);
+  const [sortOrder, setSortOrder] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all"); // Default: "all"
+  const [sortedProducts, setSortedProducts] = useState([]);
+
+  // Fetch data from API using Axios
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.get("https://fakestoreapi.com/products");
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    }
+
+    fetchData();
+  }, []);
+
+  const filterProducts = productcard.filter((product) => {
+    const productTitle = product.title ? product.title.toLowerCase() : "";
+    const search = searchQuery ? searchQuery.toLowerCase() : "";
+
+    // Filter by category if a category is selected, or show all products if "all" is selected.
+    return (
+      (selectedCategory === "all" || product.category === selectedCategory) &&
+      productTitle.includes(search)
+    );
+  });
+
+  // Sorting function A To Z and Z to A
+  useEffect(() => {
+    let sorted = [...filterProducts];
+
+    if (sortOrder === "asc") {
+      sorted = sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOrder === "desc") {
+      sorted = sorted.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    setSortedProducts([...sorted]);
+  }, [sortOrder, filterProducts]);
+
+  // Sorting function Price high to low and low to high
+  useEffect(() => {
+    if (sortOrder === "asc") {
+      setSortedProducts([...filterProducts].sort((a, b) => a.price - b.price));
+    } else if (sortOrder === "desc") {
+      setSortedProducts([...filterProducts].sort((a, b) => b.price - a.price));
+    } else {
+      setSortedProducts([...filterProducts]);
+    }
+  }, [sortOrder, filterProducts]);
+
+  const handleSort = (order) => {
+    setSortOrder(order);
+  };
+
+  const handleCategoryChange = (event) => {
+    setSelectedCategory(event.target.value);
+  };
+
+  return (
+    <>
+      <div className="row p-4 p-md-5 mb-5 rounded text-body-emphasis bg-body-secondary rounded-4 mt-5 mx-5">
+        <div className="col-lg-4 px-0">
+          <h1 className="display-4 fst-italic mainheading fw-bold">Our Products</h1>
+          <p className="lead my-3">
+            Multiple lines of text that form the lede, informing new readers
+            quickly and efficiently about what’s most interesting in this post's
+            contents.
+          </p>
+          <p className="lead mb-0">
+            <a href="#" className="text-body-emphasis btn btn-info fw-bold">
+              Shop Now
+            </a>
+          </p>
+        </div>
+        <div className="col-md-6">
+          <img
+            src={img}
+            className="rounded float-end"
+            alt="..."
+            width={200}
+            height={250}
+          />
+        </div>
+      </div>
+      <div className="row">
+        {/* Filter products */}
+        <div className="col-md-2 mx-5 mt-5 filter-products">
+          <h5 className="fw-bold">Featured Products</h5>
+          <div className="form-check">
+            <input
+              onClick={() => handleSort("asc")}
+              type="checkbox"
+              className="form-check-input"
+              value=""
+              id="sortByAtoZ"
+            />
+            <label className="form-check-label" htmlFor="sortByAtoZ">
+              A To Z
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              onClick={() => handleSort("desc")}
+              type="checkbox"
+              className="form-check-input"
+              value=""
+              id="sortByZtoA"
+            />
+            <label className="form-check-label" htmlFor="sortByZtoA">
+              Z To A
+            </label>
+          </div>
+          <hr />
+          <h5>Sort by Category</h5>
+          <select
+            className="form-select"
+            onChange={handleCategoryChange}
+            value={selectedCategory}
+          >
+            <option value="all">All</option>
+            <option value="men's clothing">Men's Clothing</option>
+            <option value="women's clothing">Women's Clothing</option>
+            <option value="jewelery">Jewelry</option>
+            <option value="electronics">Electronics</option>
+          </select>
+        </div>
+
+        <div className="col d-flex flex-row flex-wrap">
+          <div className="m-auto">
+            <h1 className="featured-title mainheading">Featured Collection</h1>
+            <h5 className="f-h">
+              🔥 Hurry, Limited Time Offer! Get the Trendy Widget X1 at $19.99 - 50% OFF! 🔥
+            </h5>
+          </div>
+
+          {/* Map data and show products */}
+          {sortedProducts.map((product) => (
+            <Link to={`/product-details/${product.id}`} style={{ textDecoration: "none" }}>
+              <div
+                className="card custom-card mb-4 mx-2"
+                style={myStyle}
+                key={product.id}
+              >
+                <img
+                  src={product.image}
+                  className="card-img-top p-2"
+                  alt={product.title}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{product.title.slice(0, 20)}</h5>
+                  <p className="card-text">
+                    {product.description.slice(0, 100)}.....
+                  </p>
+                  <a href="#" className="btn btn
