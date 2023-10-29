@@ -1,11 +1,16 @@
 
 
 body{
-    margin: 0%;
+    margin: 0px;
     background-color:    #F7F8FF;
-    padding: 0%;
+    padding: 0px;
+    
+
     
     
+}
+.home-section{
+    width: 100%;
 }
 .user-icon{
 
@@ -14,9 +19,10 @@ body{
 }
 
 .mainheading{
-    font-family: 'Fjalla One', sans-serif;
+    font-family: 'Anton', sans-serif;
     font-size: 55px;
     font-weight: bold;
+   padding-left: 44px;
 
 }
 .side-nav{
@@ -44,6 +50,7 @@ color: white;
 
 .card {
     border-radius: '25px';
+    
 }
 .container-section{
 margin-top: 23px;
@@ -73,9 +80,10 @@ margin-top: 23px;
     margin-bottom: 22px;
   }
   .filter-products{
-    background-color: #fafafa;
+    background-color: #E9ECEF;
     padding: 22px;
     border-radius: 12px;
+    height: 500px;
   }
 
   .custom-card {
@@ -134,6 +142,12 @@ margin-top: 23px;
     transform-style: preserve-3d;
     
     
+}
+.f-btn{
+  margin-left: 119px;
+}
+.rate-f{
+    color: #AEAFBC;
 }
 /* Products details */
 
@@ -229,6 +243,9 @@ margin-top: 23px;
 .cart-icon:hover{
     color: #a9aabc;
     transform: scale(1.1); 
+}
+.cart-color{
+    background-color: #eee;
 }
 
 /* modal  */
@@ -398,9 +415,9 @@ padding-right: 22px;
 
 .home-img{
 
-  padding: 15px;
-    margin-top: 30px;
-    margin-right: 22px;
+  padding: 20px;
+    margin-top: 70px;
+    margin-right: 33px;
 }
 
 
@@ -414,7 +431,7 @@ padding-right: 22px;
 }
 
 .feature-container{
-    background-color: #a9aabc;
+    
     height: 520px;
 }
 
@@ -490,18 +507,46 @@ box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 
 
 
+                                        /* Add to Cart */
+
+ 
+/* styles.css */
+
+
+.h-custom{
+    background-color: #eee;
+}
+ .img-fluid{
+    width: 65px;
+ } 
+  
+ .img-fluid2{
+    width: 45px;
+ } 
+  
+  
+.cart-main{
+    background-color: #eee;
+}
 
 
 
 
+.icon{
+    font-size: 22px;
+}
 
+.total{
 
+    margin-left: 333px;
+ padding-top: 22px;
+}
 
+.icon-count{
+    margin-bottom: 18px;
+    
 
-
-
-
-
+}
 
 
 

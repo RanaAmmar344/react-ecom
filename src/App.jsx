@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import UserAuthContex from './Context/UserAuthContex';
 import LoginPage from './Pages/LoginPage';
 import AddCart from './Pages/AddCart';
-
+// import AddCart from '../container/Container';
 
 import Checkout from './Pages/Checkout';
 import PrivateRoutes from './Pages/PrivateRoutes';
@@ -67,9 +67,9 @@ function App() {
           <Route path="/signup" element={<Signup/>} />
           <Route  element={<PrivateRoutes/>}>
 
-          <Route path="/checkout" element={<Checkout/>} />
+          <Route path="/cart" element={<AddCart/>} /> 
           </Route>
-          <Route path="/cart" element={<AddCart/>} />
+          <Route path="/checkout" element={<Checkout/>} />
           
           
         

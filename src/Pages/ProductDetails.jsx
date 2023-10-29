@@ -6,25 +6,36 @@ import {AiOutlineMinus} from 'react-icons/ai';
 import {BsFillArrowLeftSquareFill} from 'react-icons/bs';
 import Footer from '../Components/Footer';
 import MyContext from '../Context/Context';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCart } from '../store/actions/cartActions';
+
 
 const ProductDetails = () => {
   const {userLogin,setUserLogin}= useContext(MyContext ) ;
+ 
   const navigate = useNavigate()
-
-  
+  const dispatch = useDispatch();
+ 
   const handleButtonClick = () => {
    if (userLogin){
-     navigate('/cart')
+    const payload = {
+      id: data.id,       
+      title: data.title, 
+      image: data.image, 
+      price: data.price * quantity,
+      quantity,    
+      
+    };
+    dispatch(addToCart(payload));
+ 
+    
    }else{
      
      navigate('/login')
    }
  };
 
-
-
-
-
+ 
   const[data, setData] = useState([]);
   const [quantity, setQuantity]=useState(1)
 
@@ -103,15 +114,15 @@ const counterminus =()=>{
   </div>
   <div class="price-area my-4">
   <p class="old-price mb-1"><del>$100</del> <span class="old-price-discount text-danger">(20% off)</span></p>
-  <p class="new-price text-bold mb-1"><h4>${data.price}</h4></p>
+  <p  class="new-price text-bold mb-1"><h4>${data.price}</h4></p>
   <p class="text-secondary mb-1">(Additional tax may apply on checkout)</p>
   </div>
   <div class="buttons d-flex my-5">
   <div class="block">
-  <a href="#" class="shadow btn custom-btn bg-red-600 mx-2">Wishlist</a>
+  <Link to='/checkout ' href="#" class="shadow btn custom-btn bg-red-600 mx-2">Buy Now</Link>
   </div>
   <div class="block">
- <Link to ='/cart'>  <button onClick={handleButtonClick} class="shadow btn btn-danger" fdprocessedid="hwsubz">Add to cart</button></Link>
+   <Link to='/products'>  <button onClick={handleButtonClick} class="shadow btn btn-danger" fdprocessedid="hwsubz">Add to cart</button></Link>
   </div>
   
   </div>

@@ -7,6 +7,7 @@ import img2 from "../images/cloth2.png";
 import img3 from "../images/cloth3.png";
 Link
 const Products = ({ productcard, searchQuery }) => {
+  
 
 
   const myStyle = {
@@ -16,24 +17,10 @@ const Products = ({ productcard, searchQuery }) => {
   const [selectedCategory, setSelectedCategory] = useState("all");
 
   const [products, setProducts] = useState([]);
-  const [sortOrder, setSortOrder] = useState('');
+  const [sortOrder, setSortOrder] = useState("true");
   const [sortedProducts, setSortedProducts] = useState([]);
 
   
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const response = await axios.get("https://fakestoreapi.com/products");
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
-
-    fetchData();
-  }, []);
- 
   
 
   // fetch data from Api using Axios
@@ -43,6 +30,7 @@ const Products = ({ productcard, searchQuery }) => {
       try {
         const response = await axios.get("https://fakestoreapi.com/products");
         setProducts(response.data);
+        setSortOrder(response.data)
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -61,42 +49,29 @@ const Products = ({ productcard, searchQuery }) => {
     productTitle.includes(search)
   );
 });
-  // Sorting function A To Z and Z to A
+
+  // Sorting function A To Z and Z to A & Price high to low and low to high
+
   useEffect(() => {
     let sorted = [...filterProducts];
 
     if (sortOrder === "asc") {
-      sorted = sorted.sort((a, b) => a.title.localeCompare(b.title));
+      sorted = sorted.sort((a, b) => a.price - b.price);
     } else if (sortOrder === "desc") {
-      sorted = sorted.reverse((a, b) => b.title.localeCompare(a.title));
+      sorted = sorted.sort((a, b) => b.price - a.price);
+    } else if (sortOrder === "true") {
+      sorted = sorted.sort((a, b) => a.title.localeCompare(b.title));
+    } else if (sortOrder === "false") {
+      sorted = sorted.sort((a, b) => b.title.localeCompare(a.title));
     }
 
     setSortedProducts([...sorted]);
   }, [sortOrder, filterProducts]);
 
- 
-  // sorting function Price high to low and low to high
-
-  useEffect(() => {
-    if (sortOrder === "asc ") {
-
-      setSortedProducts([...filterProducts].sort((a, b) => a.price - b.price));
-    } else if (sortOrder === "desc ") {
-      setSortedProducts([...filterProducts].sort((a, b) => b.price - a.price));
-    } else {
-      setSortedProducts([...filterProducts]);
-    }
-  }, [sortOrder, filterProducts]);
-
   const handleSort = (order) => {
     setSortOrder(order);
   };
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-  };
-
- 
-
+  
 
   return (
     <>
@@ -115,13 +90,6 @@ const Products = ({ productcard, searchQuery }) => {
           </p>
         </div>
         <div class="col-md-4">
-          {/* <img
-            src={img}
-            class="rounded float-end "
-            alt="..."
-            width={200}
-            height={250}
-          /> */}
           <div id="carouselExampleAutoplaying" class="carousel slide mx-5" data-bs-ride="carousel">
   <div class="carousel-inner">
     <div class="carousel-item active">
@@ -144,16 +112,16 @@ const Products = ({ productcard, searchQuery }) => {
       <div class="row  ">
         {/* filter products */}
         <div class="col-md-2 mx-5 mt-5 filter-products  ">
-          <h5 class="fw-bold ">Featured Products</h5>
+          <h5 class="fw- ">Sort A To Z</h5>
           
           <div class="form-check">
-  <input  onClick={() => handleSort("asc ")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+  <input  onClick={() => handleSort("true")}class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
   <label  class="form-check-label" for="flexCheckChecked">
   A To Z
   </label>
 </div>
           <div class="form-check">
-  <input onClick={() => handleSort(" desc ")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+  <input  onClick={() => handleSort("false")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
   <label  class="form-check-label" for="flexCheckChecked">
      Z To A
   </label>
@@ -161,45 +129,95 @@ const Products = ({ productcard, searchQuery }) => {
 <hr />
 <h5 class=" ">Rate</h5>
 <div class="form-check">
-  <input onClick={() => handleSort("asc ")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+  <input  onClick={() => handleSort("asc")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
   <label  class="form-check-label" for="flexCheckChecked">
    Low To High
   </label>
 </div>
 <div class="form-check">
-  <input onClick={() => handleSort("desc ")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
+  <input  onClick={() => handleSort("desc")} class="form-check-input" type="checkbox" value="" id="flexCheckChecked" />
   <label  class="form-check-label" for="flexCheckChecked">
    High To Low
   </label>
 </div>
 <hr />
-<h5 class=" ">Category</h5>
+<h5 class="mb-3 ">Category</h5>
 
-          <select
-            className="form-select"
-            onChange={handleCategoryChange}
-            value={selectedCategory}
-          >
-            <option value="all">All</option>
-            <option value="men's clothing">Men's Clothing</option>
-            <option value="women's clothing">Women's Clothing</option>
-            <option value="jewelery">Jewelry</option>
-            <option value="electronics">Electronics</option>
-          </select>
+
+<div className="form-check">
+    <input
+      type="checkbox"
+      className="form-check-input"
+      id="categoryAll"
+      checked={selectedCategory === "all"}
+      onChange={() => setSelectedCategory("all")}
+    />
+    <label className="form-check-label" htmlFor="categoryAll">
+      All
+    </label>
+  </div>
+  <div className="form-check">
+    <input
+      type="checkbox"
+      className="form-check-input"
+      id="categoryMensClothing"
+      checked={selectedCategory === "men's clothing"}
+      onChange={() => setSelectedCategory("men's clothing")}
+    />
+    <label className="form-check-label" htmlFor="categoryMensClothing">
+      Men's Clothing
+    </label>
+  </div>
+  <div className="form-check">
+    <input
+      type="checkbox"
+      className="form-check-input"
+      id="categoryWomensClothing"
+      checked={selectedCategory === "women's clothing"}
+      onChange={() => setSelectedCategory("women's clothing")}
+    />
+    <label className="form-check-label" htmlFor="categoryWomensClothing">
+      Women's Clothing
+    </label>
+  </div>
+  <div className="form-check">
+    <input
+      type="checkbox"
+      className="form-check-input"
+      id="categoryJewelry"
+      checked={selectedCategory === "jewelery"}
+      onChange={() => setSelectedCategory("jewelery")}
+    />
+    <label className="form-check-label" htmlFor="categoryJewelry">
+      Jewelry
+    </label>
+  </div>
+  <div className="form-check">
+    <input
+      type="checkbox"
+      className="form-check-input"
+      id="categoryElectronics"
+      checked={selectedCategory === "electronics"}
+      onChange={() => setSelectedCategory("electronics")}
+    />
+    <label className="form-check-label" htmlFor="categoryElectronics">
+      Electronics
+    </label>
+  </div>
 
         </div>
 
         <div class="col d-flex flex-row flex-wrap  ">
           <div class='m-auto'>
 
-          <h1 class=" featured-title  mainheading  "> Featured Collection</h1>
+          <h1 class=" featured-title  mainheading  "> Products Collection</h1>
           <h5 class="  f-h ">
           🔥 Hurry, Limited Time Offer! Get the Trendy Widget X1 at $19.99 - 50% OFF! 🔥
           </h5>
           </div>
        
           {/* map data and show products  */}
-
+        
           {sortedProducts.map((product) => (
            <Link to={`/product-details/${product.id}`} style={{ textDecoration: "none" }}> <div
               class="card custom-card mb-4 mx-2   "
@@ -212,9 +230,9 @@ const Products = ({ productcard, searchQuery }) => {
                 alt={product.title}
               />
               <div class="card-body">
-                <h5 class="card-title   ">{product.title.slice(0,100 )}</h5>
+                <h5 class="card-title   ">{product.title.slice(0,15 )}.....</h5>
                 <p class="card-text">
-                  {product.description.slice(0, 100)}.....
+                  {/* {product.description.slice(0, 50)}..... */}
                 </p>
                 <a href="#" class="btn btn-warning  first:">
                   ${product.price}
@@ -223,6 +241,7 @@ const Products = ({ productcard, searchQuery }) => {
             </div>
             </Link>
           ))}
+          
         </div>
       </div>
       {/* news letter */}

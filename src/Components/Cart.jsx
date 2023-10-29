@@ -1,9 +1,17 @@
 import React from 'react'
 
 const Cart = () => {
+    const [cartItems, setCartItems]=usestate([]);
+    const [totalQuantity,setTotalQuantity]=usestate(0)
+
+    const addToCart =(item)=>{
+
+        setCartItems([...cartItems, item]);
+        setTotalQuantity(totalQuantity+1);
+    }
   return (
     <>
-      <h1>this is Cart components  </h1>
+      
     </>
   )
 }

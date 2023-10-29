@@ -19,9 +19,9 @@ const About = () => {
    <>
    <section class='about-body'>
     <div class='about-heading'> About Crescendo</div>
-   <div class='row  aboutmain' >
+   <div class='row  aboutmain'data-aos="fade-up-right" >
     <div class="col-md-6 ">
-   <img  class='about-cover' src={img}  width={600} />
+   <img  class='about-cover' src={img}  height={500} width={600} />
     </div>
     
       <div class="col-md-5 about-cover-2">
@@ -30,7 +30,7 @@ const About = () => {
       </div>
    </div>
    {/* year of experience */}
-   <div class="row m-5   exp-bg">
+   <div class="row m-5   exp-bg" data-aos="fade-up">
     <div class="col-md-2">
       <h1 class='exp-title'>20+</h1>
       <p>Years of Experience</p>
@@ -49,12 +49,12 @@ const About = () => {
     </div>
    </div>
    {/* our Value */}
-<div class=' value '>
+<div class=' value  ' >
 
    <h1 class='about-value'>Our Values</h1>
   <Link to='/products'>  <button type="button" class="btn btn-primary">View Our Products</button></Link>
 </div>
-   <div className=" value-card-row  ">
+   <div className=" value-card-row mx-5 mb-5 " data-aos="zoom-out-left">
     <div className=" text-start p-5 value-card ">
       <div class='card-icon'><BsTrophy/></div> 
       <h4>Quality</h4>
@@ -86,7 +86,7 @@ const About = () => {
       <p class='value-card-p'> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vitae, saepe.Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia, officia modi. Eum quos modi aliquid.</p>
     </div>
    </div>
-   <div className="container-exp">
+   <div className="container-exp" data-aos="fade-up">
 
    
     <h1 class='title-exp p-5'>Experience Streamlined Shopping with Crescendo</h1>

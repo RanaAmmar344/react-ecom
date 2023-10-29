@@ -2,34 +2,38 @@
 import React, { useContext, useState } from 'react'
 import {AiOutlineUser} from 'react-icons/ai';
 import {BsCart4} from 'react-icons/bs';
-import { Link, useNavigate,   } from 'react-router-dom';
+import { Link, useLocation, useNavigate,   } from 'react-router-dom';
 import img from "../images/logo.svg"
-import { Button, Modal } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import MyContext from '../Context/Context';
+import { useSelector } from 'react-redux';
+
 
 
 
 
 const Navbar = ({ onSearch}) => {
+  
+ 
 
-  const [show,setShow]= useState('Signin')
+ 
+  const cart = useSelector((state) => state.cart);
+  const totalQuantity = cart.cart.reduce((total, item) => total + item.quantity, 0);
+  console.log('cart',cart);
   const {userLogin,SignIn,SignOut}= useContext(MyContext)
  
-  const handleClick =()=>{
-  
+  const handleLoginLogout = () => {
+    if (userLogin) {
+      // If the user is logged in, log them out
+      SignOut();
+    } else {
 
-  if(userLogin){
-    SignOut();
-    setShow('Signin')
-    
-  }else{
-    SignIn();
-    setShow('Signout')
-    useNavigate('/')
-  }
- }
- 
+      SignIn();
+     
+      // If the user is not logged in, show the login form or process
+      // Example: redirect to the login page
+    }
+  };
 
 
  
@@ -45,6 +49,7 @@ const Navbar = ({ onSearch}) => {
 
  
   return (
+
 <nav class="navbar navbar-expand-lg bg-light sticky-top">
   <div class="container-fluid">
     <Link class="navbar-brand" to="#">
@@ -77,15 +82,16 @@ const Navbar = ({ onSearch}) => {
  {/* <Link to='/cart'><BsCart4 class='cart-icon'/></Link> */}
  {/* <!-- Button trigger modal --> */}
  
- <Link to ='/cart'>  <BsCart4 class='cart-icon'></BsCart4> </Link>
 
-      
+    <Link to='/cart'><BsCart4 class='cart-icon'></BsCart4></Link><span class="badge icon-count bg-primary rounded-pill">{totalQuantity}</span>  
+
+    
 
 
 
 
        {/* <div class='cart-icon' > </div> */}
-       <Link to='/login'> <button onClick={handleClick} type="button" class="btn btn-dark  mx-3"><AiOutlineUser class='user-icon'/>{show}</button></Link>
+       <Link to='/login'> <button onClick={handleLoginLogout} type="button" class="btn btn-dark  mx-3"><AiOutlineUser class='user-icon'/>{userLogin ? 'Logout' : 'Login'}</button></Link>
       <form class="d-flex" role="search">
         <input 
         type='text'

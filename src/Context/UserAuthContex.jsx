@@ -1,20 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MyContext from './Context'
-
+import { auth } from '../Pages/FireBase-config';
+import {onAuthStateChanged} from "firebase/auth";
 const UserAuthContex = (props) => {
+ 
 
-const  [userLogin,setUserLogin]=useState(true);
+const  [userLogin,setUserLogin]=useState(false);
+
 
  
+useEffect(() => {
+  const unsubscribe = auth.onAuthStateChanged((authUser) => {
+    if (authUser) {
+      // User is signed in.
+     
+      setUserLogin(authUser);
+    } else {
+      // User is signed out.
+      setUserLogin(false);
+    }
+  });
+
+  return () => unsubscribe();
+}, []);
  
-const SignIn =()=>{
+const SignIn = async (email, password) => {
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
 
-    setUserLogin(true);
-}
-const SignOut =()=>{
+ 
+  } catch (error) {
+    console.error('Error signing in:', error);
+  }
+};
 
-    setUserLogin(false)
-}
+const SignOut = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    console.error('Error signing out:', error);
+  }
+};
 
 
 

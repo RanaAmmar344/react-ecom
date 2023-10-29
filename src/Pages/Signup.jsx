@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import {Formik, Form, Field, ErrorMessage } from "formik"
 import { Fragment } from 'react'
@@ -7,10 +7,15 @@ import { AiFillFacebook} from 'react-icons/ai';
 import {AiOutlineTwitter} from 'react-icons/ai';
 import {AiOutlineInstagram} from 'react-icons/ai';
 import {BiLogoGmail} from 'react-icons/bi';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import {  createUserWithEmailAndPassword } from "firebase/auth";
+import {auth} from './FireBase-config'
+import MyContext from '../Context/Context';
 
 
 const Signup = () => {
+  const {authToken, setAuthToken}= useContext(MyContext)
+  const navigate=useNavigate();
   <ErrorMessage name="email" style={{ color: 'red' }} />
 
   const defaultValue={
@@ -19,21 +24,50 @@ const Signup = () => {
     email:'',
     number:'',
     password:'',
-    repassword:''
+   
   }
   const validationSchema = yup.object().shape({
     name: yup.string().required("Please enter First Name"),
     lastname: yup.string().required("Please enter your Last Name"),
     email: yup.string().required("Please enter your email").email("Please enter a valid email"),
-    password: yup.string().required("Please enter your password"),
-    repassword: yup.string().required("Please enter Re-password"),
+    password: yup.string().required(" Example@Abc123"),
+    
 
   });
    
-const handleSubmit = (values) => {
-  console.log("values", values)
+// Initialize Firebase
+
+
+
+const handleRegistration = async (values) => {
+  const { email, password  } = values;
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    // const idToken = await user.getIdToken();
+    console.log("User registered:", user);
+    alert('User registered successfully!');
+    // setAuthToken(idToken);
+    // navigate('/login');
+    
   
-}
+  } catch (error) {
+    console.error("Error registering user:", error);
+    alert('Registration failed. Please try again.');
+   
+    
+    
+  }
+};
+
+// Use handleRegistration function to register users.
+
+
+
+
+
+
+
   return (
     <>
    
@@ -41,7 +75,7 @@ const handleSubmit = (values) => {
   <Formik
      initialValues={defaultValue}
      validationSchema={validationSchema}
-     onSubmit={handleSubmit}       
+     onSubmit={handleRegistration }
   >
 
 
@@ -97,10 +131,8 @@ const handleSubmit = (values) => {
                   <Field placeholder='Password' name='password' type="password" id="form3Example4" class="form-control" />
                   <ErrorMessage name="password" />
                 </div>
-                <div class="form-outline mb-4">
-                  <Field type="repassword" name='repassword' placeholder='Re-Password' id="form3Example4" class="form-control" />
-                  <ErrorMessage name="repassword" />
-                </div>
+                
+                
 
                 
                 <div class="form-check d-flex justify-content-center mb-4">
@@ -111,9 +143,15 @@ const handleSubmit = (values) => {
                 </div>
 
                 
-                <button type="submit" class="btn btn-primary btn-block mb-4">
+                <button type="submit"  class="btn btn-primary btn-block mb-4">
                   Sign up
+                  
                 </button>
+                <Link to="/login">
+                <p className="small fw-bold mt-2 pt-1 mb-0">
+                  Already have an account? <a href="#!">Sign in</a>
+                </p>
+              </Link>
 
                
                 <div class="text-center">

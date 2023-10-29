@@ -1,6 +1,9 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import img from '../images/girlshoping.png';
+import img7 from '../images/girlshoping.png';
+import img4 from '../images/clothing.jpg';
+import img5 from '../images/ring.jpg';
+import img6 from '../images/tv.jpg';
 import { Link } from 'react-router-dom';
 import {TbTruckDelivery} from 'react-icons/tb';
 import {AiOutlineShopping} from 'react-icons/ai';
@@ -39,11 +42,11 @@ const Home = () => {
 
   return (
     <>
-      <section class="home-section">
-        <div class="home-container m-5">
-          <div class="row home-item">
+      <section class="home-section " >
+        <div class="home-container m-5 " data-aos="slide-left" >
+          <div class="row home-item " >
             <div class="col-md-8">
-              <h1 class="home-heading">Elevate Your Audio Journey</h1>
+              <h1 class="home-heading">Elevate Your Shoping Journey</h1>
               <h4 class="text-white mb-3">Experience Shopping in Its Purest Form</h4>
               <Link to="/products">
                 <button type="button" class="btn btn-dark">
@@ -52,9 +55,12 @@ const Home = () => {
               </Link>
               <button type="button" class="btn text-white">Learn More</button>
             </div>
-            <div class="col-md-4">
-              <img class="home-img" width={400} src={img} alt="Shopping Girl" />
+            
+            <div class="col-md-4   ">
+              <img class="home-img" width={400} src={img7} alt="Shopping Girl" />
             </div>
+           
+            
           </div>
         </div>
 
@@ -62,31 +68,65 @@ const Home = () => {
 <div class="feature-container">
 
 
-        {/* {loading ? (
-          <p>Loading...</p>
-        ) : (
-          featuredProducts.map((product) => (
-            <Link to={`/product-details/${product.id}`} style={{ textDecoration: 'none' }} key={product.id}>
-              <div class="card custom-card mb-4 mx-2 d-flex" style={myStyle}>
-                <img src={product.image} class="card-img-top p-2" alt={product.title} />
-                <div class="card-body">
-                  <h5 class="card-title">{product.title.slice(0, 100)}</h5>
-                  <p class="card-text">{product.description.slice(0, 100)}.....</p>
-                  <a href="#" class="btn btn-warning first:">
-                    ${product.price}
-                  </a>
+
+<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 mx-5 mt-5" data-aos="fade-up">
+        <div class="col">
+          <div class="card shadow-sm">
+            <img src={img4} width={200} class='m-auto p-3'/>
+            <div class="card-body">
+              <h2 class="card-text text-center"> Clothing </h2>
+              <div class=" text-center">
+                <div class="btn-group">
+                  <h5 class='rate-f'>Rate Start From 10 $</h5>
                 </div>
               </div>
-            </Link>
-          ))
-        )} */}
+               <Link to='/products'> <button type="button" class="btn btn-outline-warning f-btn " >View Products</button></Link>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+          <img src={img5} width={220} class='m-auto p-3'/>
+            <div class="card-body">
+              <h2 class="card-text text-center"> jewelary</h2>
+              <div class=" text-center">
+                <div class="btn-group">
+                  <h5 class='rate-f' >Rate Start From 20 $</h5>
+                </div>
+              </div>
+              <Link to='/products'> <button type="button" class="btn btn-outline-warning f-btn " >View Products</button></Link>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card shadow-sm">
+          <img src={img6} width={300} height={255} class='m-auto p-3'/>
+            <div class="card-body">
+              <h2 class="card-text text-center"> Electronic  </h2>
+              <div class=" text-center">
+                <div class="btn-group">
+                  <h5 class='rate-f'>Rate Start From 50 $</h5>
+                </div>
+              </div>
+              <Link to='/products'> <button type="button" class="btn btn-outline-warning f-btn " >View Products</button></Link>
+            </div>
+          </div>
+        </div>
+        
+       
+
+    
+        
+       
+        
+      </div>
         </div>
 
-        <div class="container-exp">
+        <div class="container-exp  " data-aos="fade-up">
 
    
 <h1 class='title-exp p-5'>Experience Streamlined Shopping with Crescendo</h1>
-<div class=" about-exp-grid">
+<div class=" about-exp-grid   ">
 <div class="text-center p-5 ">
   <h1><TbTruckDelivery/></h1>
   <h4>Free Delivery</h4>
@@ -116,7 +156,7 @@ const Home = () => {
 
 <h1 class='title-exp p-5'>Why Crescendo?</h1>
 
-<div class="row why-main p-5 ">
+<div class="row why-main p-5 " data-aos="zoom-out">
   <div class="col-md-4 ">
     
   <h3 ><BiSolidRightArrow class='item-why' fontSize={20}/>Exceptional Sound Quality</h3>
@@ -140,7 +180,7 @@ const Home = () => {
 
 {/* join our list to day */}
 
-<div className="row join d-flex flex-row flex-wrap mt-5  mx-5">
+<div className="row join d-flex flex-row flex-wrap mt-5  mx-5" data-aos="flip-down" >
   <div className="col-md-5 happay">
     <img src={img2} className='join-img' width={450} height={500} />
 
@@ -170,7 +210,7 @@ const Home = () => {
   </div>
 </div>
 
-<div class="px-4 py-5 my-5 text-center">
+<div class="px-4 py-5 my-5 text-center" data-aos="zoom-out">
 <FcShop className='blog'/>
     <h1 class="display-5 fw-bold text-body-emphasis">Crescendo</h1>
     <div class="col-lg-6 mx-auto">
