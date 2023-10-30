@@ -11,6 +11,9 @@ const cartReducer = (state = initialState, action) => {
         cart: [...state.cart, action.payload],
         
       };
+
+
+
     case 'REMOVE_FROM_CART':
       return {
         ...state,
@@ -25,3 +28,6 @@ const cartReducer = (state = initialState, action) => {
 };
 
 export default cartReducer;
+
+                                  
+
